@@ -1,3 +1,7 @@
+/** @jsx jsx */
+
+import { jsx } from 'theme-ui';
+
 export default function Footer() {
-    return <footer>Made By @yasnbouzi</footer>;
+    return <footer sx={{ marginTop: 'auto', textAlign: 'center' }}>Made By @yasnbouzi</footer>;
 }

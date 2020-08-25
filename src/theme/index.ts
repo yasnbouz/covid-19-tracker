@@ -6,6 +6,11 @@ export const theme = {
         text: '#000',
         background: '#f4f6f8',
         primary: '#07c',
+        success: '#05b584',
+        warning: '#FB7800',
+        error: '#FD000E',
+        white: '#fff',
+        dark: '#1E2735',
         modes: {
             dark: {
                 text: '#fff',
@@ -16,8 +21,8 @@ export const theme = {
     },
     containers: {
         page: {
-            width: '1200px',
-            maxWidth: '90%',
+            width: '90%',
+            maxWidth: '1400px',
             m: '0',
             mx: 'auto',
         },

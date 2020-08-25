@@ -14,7 +14,7 @@ function AppLayout({ children }: { children?: ReactNode }) {
                 {/* <!-- Must --> */}
                 <meta charSet="utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+                <meta name="viewport" content="width=device-width,initial-scale=1" />
                 <meta name="description" content="Description" />
                 <meta name="keywords" content="covid-19, coronavirus, pandemic 2020" />
                 <title>Covid-19</title>
@@ -48,9 +48,6 @@ function AppLayout({ children }: { children?: ReactNode }) {
 
                 {/* <!-- Disable night mode for this page  --> */}
                 <meta name="nightmode" content="enable/disable" />
-
-                {/* <!-- Fitscreen  --> */}
-                <meta name="viewport" content="uc-fitscreen=yes" />
 
                 {/* <!-- Layout mode --> */}
                 <meta name="layoutmode" content="fitscreen/standard" />
@@ -87,9 +84,23 @@ function AppLayout({ children }: { children?: ReactNode }) {
                             font-variation-settings: 'wdth' 400, 'wght' 98;
                         }
                     }
+
                     body {
                         scroll-behavior: smooth;
                         transition: background-color 0.3s ease-out, color 0.3s ease-in;
+                        font-size: clamp(0.5rem, 1vw + 0.8rem, 1.2rem);
+                    }
+                    ::-webkit-scrollbar {
+                        width: 6px;
+                        height: 6px;
+                    }
+                    ::-webkit-scrollbar-track {
+                        background-color: rgba(0, 0, 0, 0.8);
+                        border-radius: 10px;
+                    }
+                    ::-webkit-scrollbar-thumb {
+                        background-color: #dfdfdf;
+                        border-radius: 10px;
                     }
                 `}
             />

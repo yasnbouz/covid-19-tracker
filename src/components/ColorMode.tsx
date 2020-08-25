@@ -12,12 +12,13 @@ export default function ColorMode() {
                 border: 'none',
                 backgroundColor: nextColorMode === 'dark' ? '#fff' : '#212b36',
                 borderRadius: '50%',
-                padding: 3,
+                padding: 2,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 transition: 'background-color .5s ease',
-                boxShadow: '0 0 8px rgba(0,0,0,.025)',
+                boxShadow: `0px 0px 8px ${nextColorMode === 'dark' ? 'rgba(0,0,0,.08)' : 'rgba(255,255,255,.08)'}`,
+                cursor: 'pointer',
             }}
             aria-label={`Switch to ${nextColorMode} mode`}
             onClick={() => setColorMode(colorMode === 'default' ? 'dark' : 'default')}
