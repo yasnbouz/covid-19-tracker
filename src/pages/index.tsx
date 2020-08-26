@@ -8,9 +8,11 @@ import PageLayout from '@/layouts/PageLayout';
 import Grid from 'components/Grid';
 import SelectCountry from 'components/SelectCountry';
 import Stats from 'components/Stats';
+import Table from 'components/Table';
 import fetcher from 'lib/fetcher';
 import { GetStaticProps } from 'next';
 import useSWR from 'swr';
+import { SortCases } from 'utils/SortCases';
 
 export default function Home({ countries }: { countries: Array<any> }) {
     const { data } = useSWR('https://disease.sh/v3/covid-19/countries', fetcher, { initialData: countries });
@@ -23,7 +25,7 @@ export default function Home({ countries }: { countries: Array<any> }) {
         }
         return countries;
     }, []);
-
+    const sortedData = SortCases(data);
     return (
         <PageLayout sx={{ variant: 'containers.page' }}>
             <Grid>
@@ -32,7 +34,7 @@ export default function Home({ countries }: { countries: Array<any> }) {
                 {/* Map */}
                 <div sx={{ border: '1px solid red', height: '400px', gridArea: 'Map' }} className="Map"></div>
                 {/* Table */}
-                <div sx={{ border: '1px solid blue', height: '400px', minWidth: '200px', gridArea: 'Table' }} className="table"></div>
+                <Table countries={sortedData} />
                 {/* Graph */}
                 <div sx={{ border: '1px solid yellow', height: '200px', minWidth: '200px', gridArea: 'Graph' }} className="graph"></div>
             </Grid>

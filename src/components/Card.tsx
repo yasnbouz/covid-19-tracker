@@ -39,7 +39,7 @@ export default function Card({ title, type, cases, total }: CardProps) {
         >
             <p sx={{ color: 'grey' }}>{title}</p>
             <h2 sx={{ color: type }}>
-                <CountUp start={0} end={cases} separator="," />
+                <CountUp start={0} prefix="+ " end={cases} separator="," />
             </h2>
             <p>
                 <CountUp start={0} end={total} duration={3} separator="," /> Total
