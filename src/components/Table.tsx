@@ -2,6 +2,8 @@ import { useColorMode } from 'theme-ui';
 
 import styled from '@emotion/styled';
 import CountUp from 'react-countup';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function Table({ countries }: { countries: Array<any> }) {
     const [colorMode] = useColorMode();
@@ -13,7 +15,7 @@ export default function Table({ countries }: { countries: Array<any> }) {
                     {countries.map((cn) => (
                         <tr key={cn.country}>
                             <td>
-                                <img src={cn.countryInfo.flag} alt={cn.country} />
+                                <LazyLoadImage alt={cn.country} src={cn.countryInfo.flag} effect="blur" />
                                 <span> {cn.country}</span>
                             </td>
                             <td>
@@ -33,7 +35,7 @@ const StyledTable = styled.div`
     }
     img {
         width: 22px;
-        height: 11.61px;
+        height: 15px;
         margin-right: 10px;
     }
     table {
@@ -48,14 +50,14 @@ const StyledTable = styled.div`
             height: 400px;
             overflow-y: auto;
             overflow-x: hidden;
-            background-color: ${({ isDark, theme }: { isDark: boolean }) => (isDark ? theme.colors.dark : theme.colors.white)};
+            background-color: ${({ isDark, theme }: { isDark: boolean; theme: any }) => (isDark ? theme.colors.dark : theme.colors.white)};
             ::-webkit-scrollbar-track {
                 background-color: rgba(0, 0, 0, 0.4);
                 border-radius: 10px;
             }
             tr {
                 height: 40px;
-                color: ${({ isDark, theme }: { isDark: boolean }) => (isDark ? theme.colors.white : theme.colors.dark)};
+                color: ${({ isDark, theme }: { isDark: boolean; theme: any }) => (isDark ? theme.colors.white : theme.colors.dark)};
                 :nth-of-type(even) {
                     background-color: ${({ theme }) => theme.colors.background};
                 }

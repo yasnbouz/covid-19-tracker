@@ -9,7 +9,7 @@ export default function Stats({ data }) {
     if (!data)
         return (
             <div sx={{ gridArea: 'Stats', position: 'relative' }}>
-                <Loader />;
+                <Loader />
             </div>
         );
     const { cases, todayCases, recovered, todayRecovered, deaths, todayDeaths } = data;
