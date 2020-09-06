@@ -5,10 +5,10 @@ import Card from 'components/Card';
 
 import Loader from './Loader';
 
-export default function Stats({ data }) {
+export default function Stats({ data, onClick }) {
     if (!data)
         return (
-            <div sx={{ gridArea: 'Stats', position: 'relative' }}>
+            <div sx={{ gridArea: 'Stats', position: 'relative', minHeight: '200px' }}>
                 <Loader />
             </div>
         );
@@ -18,14 +18,15 @@ export default function Stats({ data }) {
             sx={{
                 display: 'flex',
                 justifyContent: 'center',
-                gap: '20px 80px',
+                gap: '40px 80px',
+                mb: 4,
                 flexWrap: 'wrap',
                 gridArea: 'Stats',
             }}
         >
-            <Card type="warning" title="Confirmed" cases={todayCases} total={cases} />
-            <Card type="success" title="Recovered" cases={todayRecovered} total={recovered} />
-            <Card type="error" title="Deaths" cases={todayDeaths} total={deaths} />
+            <Card type="warning" title="Confirmed" cases={todayCases} total={cases} onClick={() => onClick('cases')} />
+            <Card type="success" title="Recovered" cases={todayRecovered} total={recovered} onClick={() => onClick('recovered')} />
+            <Card type="error" title="Deaths" cases={todayDeaths} total={deaths} onClick={() => onClick('deaths')} />
         </div>
     );
 }

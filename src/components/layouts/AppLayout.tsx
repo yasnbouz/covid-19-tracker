@@ -72,27 +72,25 @@ function AppLayout({ children }: { children?: ReactNode }) {
                 styles={css`
                     @font-face {
                         font-family: 'Roboto';
-                        src: url('/assets/fonts/Roboto.ttf');
+                        src: url('/assets/fonts/Roboto.ttf') format('ttf');
+                        font-display: swap;
                     }
                     @supports (font-variation-settings: 'wdth' 200) {
                         @font-face {
                             font-family: 'CrimsonPro-Roman-VF';
                             src: url('/assets/fonts/CrimsonPro-Roman-VF.ttf');
+                            font-display: swap;
                         }
                         body {
-                            font-family: 'CrimsonPro-Roman-VF';
+                            font-family: 'CrimsonPro-Roman-VF' !important;
                             font-variation-settings: 'wdth' 400, 'wght' 98;
                         }
                     }
-
-                    body {
-                        scroll-behavior: smooth;
-                        transition: background-color 0.3s ease-out, color 0.3s ease-in;
-                        font-size: clamp(0.5rem, 1vw + 0.8rem, 1.2rem);
+                    html {
+                        scrollbar-width: thin;
                     }
                     ::-webkit-scrollbar {
                         width: 6px;
-                        height: 6px;
                     }
                     ::-webkit-scrollbar-track {
                         background-color: rgba(0, 0, 0, 0.8);

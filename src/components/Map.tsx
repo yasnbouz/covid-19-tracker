@@ -27,7 +27,7 @@ export default function Map({ position, zoom, countries, casesType }: Props) {
             <LeafletMap center={position} zoom={zoom}>
                 <TileLayer
                     url={mapUrl}
-                    attribution="© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
+                    attribution="© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' rel='noopener' target='_blank'>Improve this map</a></strong>"
                 />
                 <Marker position={position} icon={skater} />
                 <MyCircle countries={countries} casesType={casesType} />
@@ -39,8 +39,9 @@ const StyledMap = styled.div`
     @media (min-width: 40em) {
         border-radius: 10px;
     }
+    z-index: 0;
     grid-area: Map;
-    height: 500px;
+    height: 560px;
     width: 100%;
     background-color: #fff;
     overflow: hidden;

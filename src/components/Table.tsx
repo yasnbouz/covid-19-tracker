@@ -1,7 +1,7 @@
 import { useColorMode } from 'theme-ui';
 
 import styled from '@emotion/styled';
-import CountUp from 'react-countup';
+import numeral from 'numeral';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
@@ -16,11 +16,9 @@ export default function Table({ countries }: { countries: Array<any> }) {
                         <tr key={cn.country}>
                             <td>
                                 <LazyLoadImage alt={cn.country} src={cn.countryInfo.flag} effect="blur" />
-                                <span> {cn.country}</span>
+                                <span>{cn.country}</span>
                             </td>
-                            <td>
-                                <CountUp duration={3.2} delay={0.5} start={0} end={cn.cases} separator="," />
-                            </td>
+                            <td>{numeral(cn.cases).format('0,0')}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -30,27 +28,34 @@ export default function Table({ countries }: { countries: Array<any> }) {
 }
 const StyledTable = styled.div`
     grid-area: Table;
+    justify-self: center;
+    @media screen and (min-width: 742px) {
+        justify-self: start;
+        align-items: start;
+    }
     h3 {
-        font-size: ${({ theme }) => theme.fontSizes[3]}px;
+        font-family: 'CrimsonPro-Roman-VF';
+        font-variation-settings: 'wght' 350;
     }
     img {
         width: 22px;
         height: 15px;
+        vertical-align: middle;
+        object-fit: cover;
         margin-right: 10px;
     }
     table {
+        table-layout: fixed;
         border-radius: 4px;
         overflow: hidden;
-        width: 350px;
         border-collapse: collapse;
-        font-size: 18px;
         tbody {
             display: block;
             width: 100%;
             height: 400px;
             overflow-y: auto;
             overflow-x: hidden;
-            background-color: ${({ isDark, theme }: { isDark: boolean; theme: any }) => (isDark ? theme.colors.dark : theme.colors.white)};
+            scrollbar-width: thin;
             ::-webkit-scrollbar-track {
                 background-color: rgba(0, 0, 0, 0.4);
                 border-radius: 10px;
@@ -58,9 +63,11 @@ const StyledTable = styled.div`
             tr {
                 height: 40px;
                 color: ${({ isDark, theme }: { isDark: boolean; theme: any }) => (isDark ? theme.colors.white : theme.colors.dark)};
-                :nth-of-type(even) {
-                    background-color: ${({ theme }) => theme.colors.background};
+                :nth-of-type(odd) {
+                    background-color: ${({ isDark, theme }: { isDark: boolean; theme: any }) =>
+                        isDark ? theme.colors.dark : theme.colors.white};
                 }
+                transition: background-color 0.3s ease-out, color 0.3s ease-in;
             }
         }
         th,

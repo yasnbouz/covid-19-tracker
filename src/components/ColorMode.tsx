@@ -12,7 +12,7 @@ export default function ColorMode() {
                 border: 'none',
                 backgroundColor: nextColorMode === 'dark' ? '#fff' : '#212b36',
                 borderRadius: '50%',
-                padding: 2,
+                padding: ['5px', 2],
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

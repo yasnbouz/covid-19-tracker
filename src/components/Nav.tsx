@@ -10,11 +10,12 @@ export default function Nav() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                width: ['90%', '100%'],
+                margin: 'auto',
             }}
         >
             <h1
                 sx={{
-                    fontFamily: 'CrimsonPro-Roman-VF',
                     fontVariationSettings: '"wght" 800',
                     my: 4,
                 }}

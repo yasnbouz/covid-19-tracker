@@ -7,19 +7,19 @@ import dynamic from 'next/dynamic';
 
 import PageLayout from '@/layouts/PageLayout';
 import Grid from 'components/Grid';
-import LineChart from 'components/LineChart';
 import { CasesTypes } from 'components/Map';
-import SelectCountry from 'components/SelectCountry';
-import Stats from 'components/Stats';
-import Table from 'components/Table';
-import fetcher from 'lib/fetcher';
+import { fetcher } from 'lib/fetcher';
 import { GetStaticProps } from 'next';
 import useSWR from 'swr';
 import { SortCases } from 'utils/SortCases';
 
+const SelectCountry = dynamic(() => import('components/SelectCountry'), { ssr: false });
+const Stats = dynamic(() => import('components/Stats'), { ssr: false });
+const Table = dynamic(() => import('components/Table'), { ssr: false });
+const LineChart = dynamic(() => import('components/LineChart'), { ssr: false });
 const Map = dynamic(() => import('components/Map'), { ssr: false });
 
-export default function Home({ countries, historical }: { countries: [object]; historical: object }) {
+export default function Home({ countries, historical }: { countries: [object]; historical: any }) {
     const { data } = useSWR(`${process.env.NEXT_PUBLIC_COVID_API}/countries`, fetcher, { initialData: countries });
     const { data: chartData } = useSWR(`${process.env.NEXT_PUBLIC_COVID_API}/historical/all?lastdays=120`, fetcher, {
         initialData: historical,

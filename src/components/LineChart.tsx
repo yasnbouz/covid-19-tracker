@@ -7,11 +7,33 @@ import numeral from 'numeral';
 import { Line } from 'react-chartjs-2';
 
 import Loader from './Loader';
+import { CasesTypes } from './Map';
 
-export default function LineChart({ data }) {
+const casesTypeColors = {
+    cases: {
+        color: 'RGB(251,120,0)',
+        color_op: 'RGB(251 120 0/40%)',
+        label: 'Cases',
+    },
+    recovered: {
+        color: 'RGB(5, 181, 132)',
+        color_op: 'rgb(5 181 132/40%)',
+        label: 'Recovered',
+    },
+    deaths: {
+        color: 'RGB(253, 0, 14)',
+        color_op: 'RGB(253 0 14/40%)',
+        label: 'Deaths',
+    },
+};
+type Props = {
+    data: any;
+    casesType: CasesTypes;
+};
+export default function LineChart({ data, casesType }: Props) {
     const [colorMode] = useColorMode();
     const buildChartData = useCallback(
-        (data, casesType = 'cases') => {
+        (data, casesType) => {
             const chartData: object[] = [];
             let lastDataPoint;
             for (let date in data[casesType]) /*eslint-disable-line prefer-const*/ {
@@ -73,42 +95,28 @@ export default function LineChart({ data }) {
     );
 
     return (
-        <div sx={{ height: '200px', minWidth: '200px', gridArea: 'Graph', position: 'relative' }} className="graph">
-            <h3 sx={{ fontSize: 3 }}>Worldwide statistics</h3>
+        <div sx={{ gridArea: 'Graph', position: 'relative', justifySelf: 'center' }} className="graph">
+            <h3 sx={{ fontVariationSettings: "'wght' 350" }}>Worldwide new {casesType}</h3>
             {!data ? (
                 <Loader />
             ) : (
-                <Line
-                    options={options}
-                    data={{
-                        datasets: [
-                            {
-                                label: 'Cases',
-                                fill: false,
-                                data: buildChartData(data),
-                                backgroundColor: 'rgb(251 120 0/40%)',
-                                borderColor: 'rgb(251 120 0)',
-                                borderWidth: 1.5,
-                            },
-                            {
-                                label: 'Deaths',
-                                fill: false,
-                                data: buildChartData(data, 'deaths'),
-                                backgroundColor: 'rgb(253 0 14/40%)',
-                                borderColor: 'rgb(253 0 14)',
-                                borderWidth: 1.5,
-                            },
-                            {
-                                label: 'Recovered',
-                                fill: false,
-                                data: buildChartData(data, 'recovered'),
-                                backgroundColor: 'rgb(5 181 132/40%)',
-                                borderColor: 'rgb(5 181 132)',
-                                borderWidth: 1.5,
-                            },
-                        ],
-                    }}
-                />
+                <div sx={{ height: ['280px', '200px', '230px'], width: ['350px', '400px'] }}>
+                    <Line
+                        options={options}
+                        data={{
+                            datasets: [
+                                {
+                                    label: casesTypeColors[casesType].label,
+                                    fill: true,
+                                    data: buildChartData(data, casesType),
+                                    borderColor: casesTypeColors[casesType].color,
+                                    backgroundColor: casesTypeColors[casesType].color_op,
+                                    borderWidth: 1.5,
+                                },
+                            ],
+                        }}
+                    />
+                </div>
             )}
         </div>
     );
