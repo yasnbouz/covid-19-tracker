@@ -1,12 +1,14 @@
 /** @jsx jsx */
-
 import { jsx } from 'theme-ui';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+
+import dynamic from 'next/dynamic';
 
 import PageLayout from '@/layouts/PageLayout';
 import Grid from 'components/Grid';
-import LineGraph from 'components/LineChart';
+import LineChart from 'components/LineChart';
+import { CasesTypes } from 'components/Map';
 import SelectCountry from 'components/SelectCountry';
 import Stats from 'components/Stats';
 import Table from 'components/Table';
@@ -15,7 +17,9 @@ import { GetStaticProps } from 'next';
 import useSWR from 'swr';
 import { SortCases } from 'utils/SortCases';
 
-export default function Home({ countries, historical }: { countries: Array<any>; historical: any[] }) {
+const Map = dynamic(() => import('components/Map'), { ssr: false });
+
+export default function Home({ countries, historical }: { countries: [object]; historical: object }) {
     const { data } = useSWR(`${process.env.NEXT_PUBLIC_COVID_API}/countries`, fetcher, { initialData: countries });
     const { data: chartData } = useSWR(`${process.env.NEXT_PUBLIC_COVID_API}/historical/all?lastdays=120`, fetcher, {
         initialData: historical,
@@ -34,18 +38,32 @@ export default function Home({ countries, historical }: { countries: Array<any>;
             }, []),
         [countries],
     );
+
+    useEffect(() => {
+        if (countryInfo?.countryInfo) {
+            const { lat, long: lng } = countryInfo.countryInfo;
+            setMapPosition({ lat, lng });
+            setMapZoom(6);
+        } else {
+            setMapPosition({ lat: 40.7143528, lng: -74.0059731 });
+            setMapZoom(3);
+        }
+    }, [countryInfo, country]);
     const sortedData = SortCases(data);
+    const [mapPosition, setMapPosition] = useState({ lat: 40.7143528, lng: -74.0059731 });
+    const [mapZoom, setMapZoom] = useState(3);
+    const [casesType, setCasesType] = useState<CasesTypes>('cases');
     return (
-        <PageLayout sx={{ variant: 'containers.page' }}>
+        <PageLayout sx={{ variant: [null, 'containers.page'] }}>
             <Grid>
                 <SelectCountry countries={mapedCountries} selectedCountry={country} onCountryChange={setCountry} />
-                <Stats data={countryInfo} />
+                <Stats data={countryInfo} onClick={setCasesType} />
                 {/* Map */}
-                <div sx={{ border: '1px solid red', height: '400px', gridArea: 'Map' }} className="Map"></div>
+                <Map position={mapPosition} zoom={mapZoom} countries={data} casesType={casesType} />
                 {/* Table */}
                 <Table countries={sortedData} />
                 {/* Graph */}
-                <LineGraph data={chartData} />
+                <LineChart data={chartData} casesType={casesType} />
             </Grid>
         </PageLayout>
     );

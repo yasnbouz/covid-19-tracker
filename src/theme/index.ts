@@ -19,6 +19,7 @@ export const theme = {
             },
         },
     },
+    shadows: { success: '#05b584', warning: '#FB7800', error: '#FD000E' },
     containers: {
         page: {
             width: '90%',
