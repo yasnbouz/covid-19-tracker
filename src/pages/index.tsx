@@ -25,8 +25,12 @@ export default function Home({ countries, historical }: { countries: [object]; h
         initialData: historical,
     });
     const [country, setCountry] = useState('worldwide');
-    const url =
-        country === 'worldwide' ? `${process.env.NEXT_PUBLIC_COVID_API}/all` : `${process.env.NEXT_PUBLIC_COVID_API}/countries/${country}`;
+    const url = useMemo(() => {
+        return country === 'worldwide'
+            ? `${process.env.NEXT_PUBLIC_COVID_API}/all`
+            : `${process.env.NEXT_PUBLIC_COVID_API}/countries/${country}`;
+    }, [country]);
+
     const { data: countryInfo } = useSWR(url, fetcher);
     const mapedCountries = useMemo(
         () =>
@@ -49,7 +53,9 @@ export default function Home({ countries, historical }: { countries: [object]; h
             setMapZoom(3);
         }
     }, [countryInfo, country]);
-    const sortedData = SortCases(data);
+    const sortedData = useMemo(() => {
+        return SortCases(data);
+    }, [data]);
     const [mapPosition, setMapPosition] = useState({ lat: 40.7143528, lng: -74.0059731 });
     const [mapZoom, setMapZoom] = useState(3);
     const [casesType, setCasesType] = useState<CasesTypes>('cases');
