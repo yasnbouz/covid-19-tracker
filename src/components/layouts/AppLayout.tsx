@@ -15,9 +15,14 @@ function AppLayout({ children }: { children?: ReactNode }) {
                 <meta charSet="utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width,initial-scale=1" />
-                <meta name="description" content="Description" />
-                <meta name="keywords" content="covid-19, coronavirus, pandemic 2020" />
-                <title>Covid-19</title>
+                <meta name="title" content="The Coronavirus Tracker App" />
+                <meta
+                    name="description"
+                    content="Track the spread of the Coronavirus COVID-19 epidemic, browse an interactive map, view fatality rate and recoveries, check affected regions in real-time and more."
+                />
+                <meta name="keywords" content="covid-19,coronavirus,pandemic 2020" />
+                <meta name="author" content="@yasnbouzi" />
+                <title>The Coronavirus Tracker App</title>
 
                 {/* <!-- Android  --> */}
                 <meta name="theme-color" content="red" />
