@@ -26,7 +26,7 @@ export default function Table({ countries }: { countries: Array<any> }) {
         </StyledTable>
     );
 }
-const StyledTable = styled.div`
+const StyledTable = styled.aside`
     grid-area: Table;
     justify-self: center;
     @media screen and (min-width: 742px) {

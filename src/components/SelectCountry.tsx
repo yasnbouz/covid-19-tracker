@@ -38,19 +38,21 @@ export default function SelectCountry({
                     bg: colorMode === 'default' ? 'white' : 'dark',
                     color: 'text',
                     transition: 'background-color .3s ease-out, color 0.3s ease-in',
-                    '.ReactA11ySelect__ul__li:not(:hover)': {
-                        color: 'text',
-                        transition: 'background-color .3s ease-out, color 0.3s ease-in',
-                    },
-                },
-                ul: {
                     borderTopRightRadius: 'unset',
                     borderBottomRightRadius: 'unset',
-                    height: '400px',
+                    maxWidth: '330px',
+                    height: '360px',
+                    mr: ['20px', null],
                     overflow: 'auto',
                     scrollbarWidth: 'thin',
                     '::-webkit-scrollbar': {
                         width: '4px',
+                    },
+                    '.ReactA11ySelect__ul__li': {
+                        ':not(:hover)': {
+                            color: 'text',
+                            transition: 'background-color .3s ease-out, color 0.3s ease-in',
+                        },
                     },
                 },
             }}

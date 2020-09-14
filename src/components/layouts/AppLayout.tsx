@@ -94,6 +94,10 @@ function AppLayout({ children }: { children?: ReactNode }) {
                     html {
                         scrollbar-width: thin;
                     }
+                    section,
+                    aside {
+                        content-visibility: auto;
+                    }
                     ::-webkit-scrollbar {
                         width: 6px;
                     }

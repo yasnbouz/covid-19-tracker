@@ -95,7 +95,7 @@ export default function LineChart({ data, casesType }: Props) {
     );
 
     return (
-        <div sx={{ gridArea: 'Graph', position: 'relative', justifySelf: 'center' }} className="graph">
+        <aside sx={{ gridArea: 'Graph', position: 'relative', justifySelf: 'center' }} className="graph">
             <h3 sx={{ fontVariationSettings: "'wght' 350" }}>Worldwide new {casesType}</h3>
             {!data ? (
                 <Loader />
@@ -118,6 +118,6 @@ export default function LineChart({ data, casesType }: Props) {
                     />
                 </div>
             )}
-        </div>
+        </aside>
     );
 }
