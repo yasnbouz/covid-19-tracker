@@ -35,7 +35,7 @@ export default function Card({ title, type, cases, total, onClick }: CardProps) 
             sx={{
                 bg: nextColorMode === 'dark' ? 'white' : 'dark',
                 p: 1,
-                borderRadius: 10,
+                borderRadius: 3,
                 flex: '0 0 250px',
                 boxShadow: nextColorMode === 'dark' ? '0 20px 40px rgba(0,0,0,.1)' : '0 0 8px rgb(38 45 75 / 58%)',
                 textAlign: 'center',

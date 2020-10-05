@@ -15,8 +15,15 @@ export default function Table({ countries }: { countries: Array<any> }) {
                     {countries.map((cn) => (
                         <tr key={cn.country}>
                             <td>
-                                <LazyLoadImage alt={cn.country} src={cn.countryInfo.flag} effect="blur" />
-                                <span>{cn.country}</span>
+                                <LazyLoadImage
+                                    wrapperClassName="img-wrapper"
+                                    height="15px"
+                                    width="22px"
+                                    alt={cn.country}
+                                    src={cn.countryInfo.flag}
+                                    effect="blur"
+                                />
+                                <span className="country">{cn.country}</span>
                             </td>
                             <td>{numeral(cn.cases).format('0,0')}</td>
                         </tr>
@@ -37,16 +44,18 @@ const StyledTable = styled.aside`
         font-family: 'CrimsonPro-Roman-VF';
         font-variation-settings: 'wght' 350;
     }
+    .img-wrapper {
+        margin-right: 10px;
+    }
     img {
         width: 22px;
         height: 15px;
         vertical-align: middle;
         object-fit: cover;
-        margin-right: 10px;
     }
     table {
         table-layout: fixed;
-        border-radius: 4px;
+        border-radius: 3px;
         overflow: hidden;
         border-collapse: collapse;
         tbody {

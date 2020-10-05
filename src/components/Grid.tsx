@@ -8,7 +8,7 @@ export default function Grid({ children }: { children: ReactNode }) {
 
 const StyledGrid = styled.div`
     display: grid;
-    grid-template-columns: 2fr auto;
+    grid-template-columns: 1fr 400px;
     grid-template-rows: repeat(3, auto) 1fr;
     grid-template-areas: 'Select .' 'Stats Table' 'Map Table' 'Map Graph';
     gap: 20px;

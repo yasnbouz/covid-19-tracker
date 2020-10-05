@@ -92,18 +92,26 @@ function AppLayout({ children }: { children?: ReactNode }) {
                         }
                     }
                     html {
-                        scrollbar-width: thin;
+                        scrollbar-width: none;
+                    }
+                    img {
+                        max-width: 100%;
                     }
                     section,
                     aside {
                         content-visibility: auto;
+                    }
+                    :focus:not(::focus-visible) {
+                        outline: none;
+                    }
+                    body::-webkit-scrollbar {
+                        width: 0;
                     }
                     ::-webkit-scrollbar {
                         width: 6px;
                     }
                     ::-webkit-scrollbar-track {
                         background-color: rgba(0, 0, 0, 0.8);
-                        border-radius: 10px;
                     }
                     ::-webkit-scrollbar-thumb {
                         background-color: #dfdfdf;

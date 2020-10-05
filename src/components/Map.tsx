@@ -37,7 +37,7 @@ export default function Map({ position, zoom, countries, casesType }: Props) {
 }
 const StyledMap = styled.section`
     @media (min-width: 40em) {
-        border-radius: 10px;
+        border-radius: 3px;
     }
     z-index: 0;
     grid-area: Map;

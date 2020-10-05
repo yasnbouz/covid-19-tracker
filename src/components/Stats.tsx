@@ -8,13 +8,13 @@ import Loader from './Loader';
 export default function Stats({ data, onClick }) {
     if (!data)
         return (
-            <section sx={{ gridArea: 'Stats', position: 'relative', minHeight: '200px' }}>
+            <div sx={{ gridArea: 'Stats', position: 'relative', minHeight: '200px' }}>
                 <Loader />
-            </section>
+            </div>
         );
     const { cases, todayCases, recovered, todayRecovered, deaths, todayDeaths } = data;
     return (
-        <section
+        <div
             sx={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -27,6 +27,6 @@ export default function Stats({ data, onClick }) {
             <Card type="warning" title="Confirmed" cases={todayCases} total={cases} onClick={() => onClick('cases')} />
             <Card type="success" title="Recovered" cases={todayRecovered} total={recovered} onClick={() => onClick('recovered')} />
             <Card type="error" title="Deaths" cases={todayDeaths} total={deaths} onClick={() => onClick('deaths')} />
-        </section>
+        </div>
     );
 }
