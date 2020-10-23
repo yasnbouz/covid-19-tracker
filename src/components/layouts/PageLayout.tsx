@@ -8,13 +8,13 @@ import Footer from 'components/Footer';
 import Header from 'components/Header';
 import { NextSeo } from 'next-seo';
 
-export default function PageLayout({ children, ...props }: { children: ReactNode }) {
+export default function PageLayout({ children, country, ...props }: { children: ReactNode; country: string }) {
     return (
         <div {...props} sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <NextSeo
                 title="The Coronavirus Tracker App"
                 description="Track the spread of the Coronavirus COVID-19 epidemic, browse an interactive map, view fatality rate and recoveries, check affected regions in real-time and more."
-                canonical="https://covid-19-tracker-wheat.vercel.app/"
+                canonical={`https://covid-19-tracker-wheat.vercel.app/${country}`}
                 additionalMetaTags={[
                     {
                         name: 'keywords',

@@ -10,16 +10,16 @@ export const theme = {
         warning: '#ec7100',
         error: '#FD000E',
         white: '#fff',
-        dark: '#1E2735',
+        dark: '#0a171f',
         modes: {
             dark: {
                 text: '#fff',
-                background: '#19212a',
+                background: '#081217',
                 primary: '#0cf',
             },
         },
     },
-    shadows: { success: '#00a476', warning: '#ec7100', error: '#FD000E' },
+    shadows: { success: '#00a476', warning: '#ec7100', error: '#FD000E', dark: '#0a171f' },
     containers: {
         page: {
             width: '90%',

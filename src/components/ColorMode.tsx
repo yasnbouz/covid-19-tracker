@@ -7,26 +7,27 @@ export default function ColorMode() {
     return (
         <button
             sx={{
+                width: '44px',
+                height: '44px',
                 appearance: 'none',
                 outline: 'none',
                 border: 'none',
-                backgroundColor: nextColorMode === 'dark' ? '#fff' : '#212b36',
+                backgroundColor: nextColorMode === 'dark' ? 'white' : 'dark',
                 borderRadius: '50%',
-                padding: ['5px', 2],
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 transition: 'background-color .5s ease',
-                boxShadow: `0px 0px 8px ${nextColorMode === 'dark' ? 'rgba(0,0,0,.08)' : 'rgba(255,255,255,.08)'}`,
+                boxShadow: nextColorMode === 'dark' ? '0px 0px 8px rgba(0,0,0,.08)' : '',
                 cursor: 'pointer',
             }}
             aria-label={`Switch to ${nextColorMode} mode`}
             onClick={() => setColorMode(colorMode === 'default' ? 'dark' : 'default')}
         >
             {colorMode === 'default' ? (
-                <img src="/assets/svg/moon.svg" alt="Dark Mode" />
+                <img src="/assets/svg/moon.svg" alt="Dark Mode" width="24px" height="24px" />
             ) : (
-                <img src="/assets/svg/sun.svg" alt="Light Mode" />
+                <img src="/assets/svg/sun.svg" alt="Light Mode" width="24px" height="24px" />
             )}
         </button>
     );

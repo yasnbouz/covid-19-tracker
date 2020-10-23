@@ -1,9 +1,10 @@
 /** @jsx jsx */
 import { jsx, useColorMode } from 'theme-ui';
 
+import Link from 'next/link';
+
 import { Select, Option } from 'react-a11y-select';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-
 import 'react-a11y-select/src/styles.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
@@ -33,6 +34,8 @@ export default function SelectCountry({
                     bg: colorMode === 'default' ? 'white' : 'dark',
                     borderColor: colorMode === 'default' ? 'white' : 'dark',
                     transition: 'background-color .3s ease-out, color 0.3s ease-in',
+                    height: '44px',
+                    minWidth: 'max-content',
                 },
                 '.ReactA11ySelect__ul': {
                     bg: colorMode === 'default' ? 'white' : 'dark',
@@ -43,7 +46,7 @@ export default function SelectCountry({
                     borderRadius: '3px',
                     maxWidth: '330px',
                     height: '360px',
-                    boxShadow: `0 0 16px ${colorMode === 'default' ? 'hsl(0 0% 90% / 1)' : 'hsl(217 28% 15% / 1)'}`,
+                    boxShadow: (theme) => `0 0 16px ${colorMode === 'default' ? 'hsl(0 0% 90% / 1)' : theme.colors.modes.dark.background}`,
                     mr: ['20px', null],
                     overflow: 'auto',
                     scrollbarWidth: 'thin',
@@ -58,26 +61,57 @@ export default function SelectCountry({
                             color: 'text',
                             transition: 'background-color .3s ease-out, color 0.3s ease-in',
                         },
+                        ':focus': {
+                            backgroundColor: (theme) => theme.colors.text,
+                            color: (theme) => theme.colors.background,
+                            outline: 'none',
+                        },
                     },
+                },
+                '.ReactA11ySelect__button__arrow-indicator:after': {
+                    verticalAlign: 'middle',
+                },
+                '.ReactA11ySelect__ul__li__selected-indicator:after': {
+                    float: 'left',
+                    position: 'relative',
+                    left: '-4px',
+                },
+                '.ReactA11ySelect__ul__li:not([aria-checked=true])': {
+                    pl: '1.53rem',
                 },
                 '.img-wrapper': {
                     marginRight: '10px',
+                    verticalAlign: 'top',
                 },
             }}
         >
             <Select onChange={onCountryChange} initialValue={selectedCountry} label="select country">
                 <Option value="worldwide">
                     <img
-                        sx={{ width: '22px', height: '15px', verticalAlign: 'middle', mr: '10px' }}
+                        width="22px"
+                        height="15px"
+                        sx={{ verticalAlign: 'middle', mr: '10px' }}
                         src="/assets/svg/earth.svg"
                         role="presentation"
                         alt="Worldwide"
                     />
-                    Worldwide
+                    <p
+                        sx={{
+                            maxWidth: '220px',
+                            display: 'inline-block',
+                            overflow: 'hidden',
+                            verticalAlign: 'middle',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            m: 0,
+                        }}
+                    >
+                        worldwide
+                    </p>
                 </Option>
 
                 {countries.map((country) => (
-                    <Option value={country.value} key={country.value}>
+                    <Option value={country.name} key={country.value}>
                         <LazyLoadImage
                             sx={{
                                 width: '22px',
@@ -93,7 +127,19 @@ export default function SelectCountry({
                             src={country.flag}
                             effect="blur"
                         />
-                        {country.name}
+                        <p
+                            sx={{
+                                maxWidth: '220px',
+                                display: 'inline-block',
+                                overflow: 'hidden',
+                                verticalAlign: 'middle',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                                m: 0,
+                            }}
+                        >
+                            {country.name}
+                        </p>
                     </Option>
                 ))}
             </Select>

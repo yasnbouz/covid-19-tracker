@@ -37,7 +37,7 @@ export default function Card({ title, type, cases, total, onClick }: CardProps) 
                 p: 1,
                 borderRadius: 3,
                 flex: '0 0 250px',
-                boxShadow: nextColorMode === 'dark' ? '0 20px 40px rgba(0,0,0,.1)' : '0 0 8px rgb(38 45 75 / 58%)',
+                boxShadow: nextColorMode === 'dark' ? '0 20px 40px rgba(0,0,0,.1)' : '',
                 textAlign: 'center',
                 position: 'relative',
                 overflow: 'hidden',

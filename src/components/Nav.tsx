@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
 
+import Link from 'next/link';
+
 import ColorMode from './ColorMode';
 
 export default function Nav() {
@@ -20,7 +22,9 @@ export default function Nav() {
                     my: 4,
                 }}
             >
-                Covid-19
+                <Link href="/countries/worldwide">
+                    <a sx={{ textDecoration: 'none', cursor: 'pointer' }}>Covid-19</a>
+                </Link>
             </h1>
             <ColorMode />
         </nav>
