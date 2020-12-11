@@ -68,13 +68,13 @@ function AppLayout({ children }: { children?: ReactNode }) {
                     @font-face {
                         font-family: 'Roboto';
                         src: url('/assets/fonts/Roboto.ttf') format('truetype');
-                        font-display: optional;
+                        font-display: swap;
                     }
                     @supports (font-variation-settings: 'wdth' 200) {
                         @font-face {
                             font-family: 'CrimsonPro-Roman-VF';
                             src: url('/assets/fonts/CrimsonPro-Roman-VF.ttf') format('truetype');
-                            font-display: optional;
+                            font-display: swap;
                         }
                         body {
                             font-family: 'CrimsonPro-Roman-VF' !important;

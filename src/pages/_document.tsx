@@ -12,13 +12,7 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <link
-                        rel="preload"
-                        href="/assets/fonts/CrimsonPro-Roman-VF.ttf"
-                        as="font"
-                        type="font/truetype"
-                        crossOrigin="anonymous"
-                    />
+                    <link rel="preload" href="/assets/fonts/CrimsonPro-Roman-VF.ttf" as="font" crossOrigin="anonymous" />
 
                     {/* Global Site Tag (gtag.js) - Google Analytics */}
                     <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />

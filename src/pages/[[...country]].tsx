@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -13,41 +13,29 @@ import { CasesTypes } from 'components/Map';
 import SelectCountry from 'components/SelectCountry';
 import Stats from 'components/Stats';
 import Table from 'components/Table';
+import { useChartData, useCountries, useCountryData, useSelectCountries, useTableData, useURL } from 'hooks';
 import { fetcher } from 'lib/fetcher';
 import { GetServerSideProps } from 'next';
-import useSWR from 'swr';
-import { SortCases } from 'utils/SortCases';
 
 const Map = dynamic(() => import('components/Map'), { ssr: false });
 
 export default function Home({ countries, historical, countryData }: { countries: [object]; historical: any; countryData: any }) {
     const router = useRouter();
-    const { name } = router.query;
-    const { data } = useSWR(`${process.env.NEXT_PUBLIC_COVID_API}/countries`, fetcher, { initialData: countries });
-    const { data: chartData } = useSWR(`${process.env.NEXT_PUBLIC_COVID_API}/historical/all?lastdays=120`, fetcher, {
-        initialData: historical,
-    });
-    const [country] = useState(name as string);
-    const handleCountryChange = (country) => {
-        router.replace(`/countries/${country}`);
-    };
-    const url = useMemo(() => {
-        return country === 'worldwide'
-            ? `${process.env.NEXT_PUBLIC_COVID_API}/all`
-            : `${process.env.NEXT_PUBLIC_COVID_API}/countries/${country}`;
-    }, [country]);
+    const { allCountries } = useCountries({ initialData: countries });
+    const { chartData } = useChartData({ initialData: historical });
+    const [country, setCountry] = useState(router.query?.country?.[0] ?? 'worldwide');
+    const url = useURL({ country });
+    const { countryInfo } = useCountryData({ url, initialData: countryData });
 
-    const { data: countryInfo } = useSWR(url, fetcher, { initialData: countryData });
-    const mapedCountries = useMemo(
-        () =>
-            data.reduce((countries, nextConntry) => {
-                if (nextConntry.countryInfo.iso2 !== null) {
-                    countries.push({ name: nextConntry.country, value: nextConntry.countryInfo.iso2, flag: nextConntry.countryInfo.flag });
-                }
-                return countries;
-            }, []),
-        [countries],
-    );
+    const handleCountryChange = (country) => {
+        setCountry(country);
+        router.push(`/${country}`);
+    };
+    const mapedCountries = useSelectCountries({ allCountries });
+    const sortedData = useTableData({ allCountries });
+    const [mapPosition, setMapPosition] = useState({ lat: 40.7143528, lng: -74.0059731 });
+    const [mapZoom, setMapZoom] = useState(3);
+    const [casesType, setCasesType] = useState<CasesTypes>('cases');
 
     useEffect(() => {
         if (countryInfo?.countryInfo) {
@@ -59,19 +47,13 @@ export default function Home({ countries, historical, countryData }: { countries
             setMapZoom(3);
         }
     }, [countryInfo, country]);
-    const sortedData = useMemo(() => {
-        return SortCases(data);
-    }, [data]);
-    const [mapPosition, setMapPosition] = useState({ lat: 40.7143528, lng: -74.0059731 });
-    const [mapZoom, setMapZoom] = useState(3);
-    const [casesType, setCasesType] = useState<CasesTypes>('cases');
     return (
         <PageLayout sx={{ variant: [null, 'containers.page'] }} country={country}>
             <Grid>
                 <SelectCountry countries={mapedCountries} selectedCountry={country} onCountryChange={handleCountryChange} />
                 <Stats data={countryInfo} onClick={setCasesType} />
                 {/* Map */}
-                <Map position={mapPosition} zoom={mapZoom} countries={data} casesType={casesType} />
+                <Map position={mapPosition} zoom={mapZoom} countries={allCountries} casesType={casesType} />
                 {/* Table */}
                 <Table countries={sortedData} />
                 {/* Graph */}
@@ -84,9 +66,8 @@ export default function Home({ countries, historical, countryData }: { countries
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const countries = await fetcher(`${process.env.NEXT_PUBLIC_COVID_API}/countries`);
     const historical = await fetcher(`${process.env.NEXT_PUBLIC_COVID_API}/historical/all?lastdays=120`);
-    const country = ctx?.params?.name;
-    const url =
-        country === 'worldwide' ? `${process.env.NEXT_PUBLIC_COVID_API}/all` : `${process.env.NEXT_PUBLIC_COVID_API}/countries/${country}`;
+    const country = ctx.params?.country?.[0] ?? 'worldwide';
+    const url = `${process.env.NEXT_PUBLIC_COVID_API}/${country === 'worldwide' ? `all` : `countries/${country}`}`;
     const countryData = await fetcher(url);
     return { props: { countries, historical, countryData } };
 };

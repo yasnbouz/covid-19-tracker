@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx, useColorMode } from 'theme-ui';
 
-import Link from 'next/link';
-
 import { Select, Option } from 'react-a11y-select';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-a11y-select/src/styles.css';
