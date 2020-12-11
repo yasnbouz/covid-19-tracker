@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, useColorMode } from 'theme-ui';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import numeral from 'numeral';
 
@@ -26,8 +26,16 @@ export default function Card({ title, type, cases, total, onClick }: CardProps) 
         },
         [onClick],
     );
+    const refCard = useRef<HTMLDivElement>(null!);
+    useEffect(() => {
+        if (type === 'warning') {
+            refCard.current.focus();
+        }
+    }, [refCard.current]);
+
     return (
         <div
+            ref={refCard}
             role="button"
             tabIndex={0}
             onClick={onClick}
