@@ -7,7 +7,6 @@ import numeral from 'numeral';
 import { Line } from 'react-chartjs-2';
 
 import Loader from './Loader';
-import { CasesTypes } from './Map';
 
 const casesTypeColors = {
     cases: {
@@ -26,6 +25,7 @@ const casesTypeColors = {
         label: 'Deaths',
     },
 };
+type CasesTypes = 'cases' | 'recovered' | 'deaths';
 type Props = {
     data: any;
     casesType: CasesTypes;

@@ -9,65 +9,77 @@ import { useRouter } from 'next/router';
 import PageLayout from '@/layouts/PageLayout';
 import Grid from 'components/Grid';
 import LineChart from 'components/LineChart';
-import { CasesTypes } from 'components/Map';
+import Loader from 'components/Loader';
 import SelectCountry from 'components/SelectCountry';
 import Stats from 'components/Stats';
 import Table from 'components/Table';
-import { useChartData, useCountries, useCountryData, useSelectCountries, useTableData, useURL } from 'hooks';
+import { useSelectCountries } from 'hooks';
 import { fetcher } from 'lib/fetcher';
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { StyledMap } from 'styles';
 
-const Map = dynamic(() => import('components/Map'), { ssr: false });
+const Map = dynamic(() => import('components/Map'), { ssr: false, loading: Loader });
+type CasesTypes = 'cases' | 'recovered' | 'deaths';
 
 export default function Home({ countries, historical, countryData }: { countries: [object]; historical: any; countryData: any }) {
     const router = useRouter();
-    const { allCountries } = useCountries({ initialData: countries });
-    const { chartData } = useChartData({ initialData: historical });
+    if (router.isFallback) {
+        return <Loader />;
+    }
     const [country, setCountry] = useState(router.query?.country?.[0] ?? 'worldwide');
-    const url = useURL({ country });
-    const { countryInfo } = useCountryData({ url, initialData: countryData });
 
     const handleCountryChange = (country) => {
         setCountry(country);
-        router.push(`/${country}`);
+        country === 'worldwide' ? router.push('/') : router.push(`/${country}`);
     };
-    const mapedCountries = useSelectCountries({ allCountries });
-    const sortedData = useTableData({ allCountries });
+    const mapedCountries = useSelectCountries({ allCountries: countries });
     const [mapPosition, setMapPosition] = useState({ lat: 40.7143528, lng: -74.0059731 });
     const [mapZoom, setMapZoom] = useState(3);
-    const [casesType, setCasesType] = useState<CasesTypes>('cases');
+    const [casesType, setCasesType] = useState<CasesTypes>('deaths');
 
     useEffect(() => {
-        if (countryInfo?.countryInfo) {
-            const { lat, long: lng } = countryInfo.countryInfo;
+        if (countryData?.countryInfo) {
+            const { lat, long: lng } = countryData.countryInfo;
             setMapPosition({ lat, lng });
             setMapZoom(6);
         } else {
             setMapPosition({ lat: 40.7143528, lng: -74.0059731 });
             setMapZoom(3);
         }
-    }, [countryInfo, country]);
+    }, []);
     return (
         <PageLayout sx={{ variant: [null, 'containers.page'] }} country={country}>
             <Grid>
                 <SelectCountry countries={mapedCountries} selectedCountry={country} onCountryChange={handleCountryChange} />
-                <Stats data={countryInfo} onClick={setCasesType} />
+                <Stats data={countryData} onClick={setCasesType} />
                 {/* Map */}
-                <Map position={mapPosition} zoom={mapZoom} countries={allCountries} casesType={casesType} />
+                <StyledMap>
+                    <Map position={mapPosition} zoom={mapZoom} countries={countries} casesType={casesType} />
+                </StyledMap>
                 {/* Table */}
-                <Table countries={sortedData} />
+                <Table countries={countries} />
                 {/* Graph */}
-                <LineChart data={chartData} casesType={casesType} />
+                <LineChart data={historical} casesType={casesType} />
             </Grid>
         </PageLayout>
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+    const countries: any[] = await fetcher(`${process.env.NEXT_PUBLIC_COVID_API}/countries`);
+    const paths = countries.map((cn) => ({ params: { country: [`${cn.countryInfo.iso2}`] } }));
+    return {
+        paths: [{ params: { country: [] } }, ...paths],
+        fallback: true,
+    };
+};
+export const getStaticProps: GetStaticProps = async (ctx) => {
     const countries = await fetcher(`${process.env.NEXT_PUBLIC_COVID_API}/countries`);
     const historical = await fetcher(`${process.env.NEXT_PUBLIC_COVID_API}/historical/all?lastdays=120`);
     const country = ctx.params?.country?.[0] ?? 'worldwide';
-    const url = `${process.env.NEXT_PUBLIC_COVID_API}/${country === 'worldwide' ? `all` : `countries/${country}`}`;
+    const url = `${process.env.NEXT_PUBLIC_COVID_API}/${
+        country === 'worldwide' ? `all` : `countries/${country}`
+    }?yesterday=true&strict=true`;
     const countryData = await fetcher(url);
-    return { props: { countries, historical, countryData } };
+    return { revalidate: 60 * 60 * 12, props: { countries, historical, countryData } };
 };

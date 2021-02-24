@@ -109,7 +109,7 @@ export default function SelectCountry({
                 </Option>
 
                 {countries.map((country) => (
-                    <Option value={country.name} key={country.value}>
+                    <Option value={country.value} key={country.value}>
                         <LazyLoadImage
                             sx={{
                                 width: '22px',

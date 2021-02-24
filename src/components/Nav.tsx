@@ -22,7 +22,7 @@ export default function Nav() {
                     my: 4,
                 }}
             >
-                <Link href="/countries/worldwide">
+                <Link href="/">
                     <a sx={{ textDecoration: 'none', cursor: 'pointer' }}>Covid-19</a>
                 </Link>
             </h1>

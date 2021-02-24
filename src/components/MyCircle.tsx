@@ -5,7 +5,7 @@ import { jsx } from 'theme-ui';
 import numeral from 'numeral';
 import { Circle, Popup } from 'react-leaflet';
 
-import { CasesTypes } from './Map';
+type CasesTypes = 'cases' | 'recovered' | 'deaths';
 
 type Props = {
     countries: any;

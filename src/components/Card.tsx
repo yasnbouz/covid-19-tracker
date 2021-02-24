@@ -28,7 +28,7 @@ export default function Card({ title, type, cases, total, onClick }: CardProps) 
     );
     const refCard = useRef<HTMLDivElement>(null!);
     useEffect(() => {
-        if (type === 'warning') {
+        if (type === 'error') {
             refCard.current.focus();
         }
     }, [refCard.current]);
