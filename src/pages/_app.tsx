@@ -9,6 +9,9 @@ import * as gtag from 'lib/gtag';
 export default function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     useEffect(() => {
+        document.body.removeAttribute('style');
+    }, []);
+    useEffect(() => {
         const handleRouteChange = (url) => {
             gtag.pageview(url);
         };

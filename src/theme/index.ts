@@ -2,19 +2,22 @@ import { roboto } from '@theme-ui/presets';
 
 export const theme = {
     ...roboto,
+    useColorSchemeMediaQuery: true,
     colors: {
         text: '#000',
         background: '#f4f6f8',
+        background2: '#fff',
         primary: '#07c',
         success: '#00a476',
         warning: '#ec7100',
         error: '#FD000E',
         white: '#fff',
-        dark: '#0a171f',
+        dark: '#1a2637',
         modes: {
             dark: {
                 text: '#fff',
                 background: '#081217',
+                background2: '#1a2637',
                 primary: '#0cf',
             },
         },
@@ -35,7 +38,6 @@ export const theme = {
             lineHeight: 'body',
             fontWeight: 'body',
             scrollBehavior: 'smooth',
-            transition: 'background-color .3s ease-out, color 0.3s ease-in',
             fontSize: 'clamp(0.5rem, 1vw + 0.8rem, 1.2rem)',
         },
     },

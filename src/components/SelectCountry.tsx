@@ -29,16 +29,14 @@ export default function SelectCountry({
                 justifySelf: 'center',
                 '.ReactA11ySelect__button': {
                     color: 'text',
-                    bg: colorMode === 'default' ? 'white' : 'dark',
-                    borderColor: colorMode === 'default' ? 'white' : 'dark',
-                    transition: 'background-color .3s ease-out, color 0.3s ease-in',
+                    bg: 'background2',
+                    borderColor: 'transparent',
                     height: '44px',
                     minWidth: 'max-content',
                 },
                 '.ReactA11ySelect__ul': {
-                    bg: colorMode === 'default' ? 'white' : 'dark',
+                    bg: 'background2',
                     color: 'text',
-                    transition: 'background-color .3s ease-out, color 0.3s ease-in',
                     borderTopRightRadius: 'unset',
                     borderBottomRightRadius: 'unset',
                     borderRadius: '3px',
@@ -57,7 +55,6 @@ export default function SelectCountry({
                     '.ReactA11ySelect__ul__li': {
                         ':not(:hover)': {
                             color: 'text',
-                            transition: 'background-color .3s ease-out, color 0.3s ease-in',
                         },
                         ':focus': {
                             backgroundColor: (theme) => theme.colors.text,

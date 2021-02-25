@@ -98,12 +98,6 @@ export const StyledTable = styled.aside`
             }
             tr {
                 height: 40px;
-                color: ${({ isDark, theme }: { isDark: boolean; theme: any }) => (isDark ? theme.colors.white : theme.colors.dark)};
-                :nth-of-type(odd) {
-                    background-color: ${({ isDark, theme }: { isDark: boolean; theme: any }) =>
-                        isDark ? theme.colors.dark : theme.colors.white};
-                }
-                transition: background-color 0.3s ease-out, color 0.3s ease-in;
             }
         }
         th,

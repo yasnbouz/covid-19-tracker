@@ -41,7 +41,7 @@ export default function Card({ title, type, cases, total, onClick }: CardProps) 
             onClick={onClick}
             onKeyPress={onKeyPress}
             sx={{
-                bg: nextColorMode === 'dark' ? 'white' : 'dark',
+                bg: 'background2',
                 p: 1,
                 borderRadius: 3,
                 flex: '0 0 250px',
@@ -51,7 +51,6 @@ export default function Card({ title, type, cases, total, onClick }: CardProps) 
                 overflow: 'hidden',
                 cursor: 'pointer',
                 outline: 'none',
-                transition: 'background-color .3s ease-out, color 0.3s ease-in',
                 ':focus': {
                     boxShadow: (theme) => `0px 0px 4px ${theme.shadows[type]}`,
                 },

@@ -1,4 +1,5 @@
-import { useColorMode } from 'theme-ui';
+/** @jsx jsx */
+import { jsx } from 'theme-ui';
 
 import numeral from 'numeral';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -6,14 +7,13 @@ import { StyledTable } from 'styles';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function Table({ countries }: { countries: Array<any> }) {
-    const [colorMode] = useColorMode();
     return (
-        <StyledTable isDark={colorMode === 'dark'}>
+        <StyledTable>
             <h3>Live cases by country</h3>
             <table>
                 <tbody>
                     {countries.map((cn) => (
-                        <tr key={cn.country}>
+                        <tr key={cn.country} sx={{ bg: 'background', ':nth-of-type(odd)': { bg: 'background2' } }}>
                             <td>
                                 <LazyLoadImage
                                     wrapperClassName="img-wrapper"
