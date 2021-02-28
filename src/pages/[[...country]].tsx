@@ -13,7 +13,7 @@ import Loader from 'components/Loader';
 import SelectCountry from 'components/SelectCountry';
 import Stats from 'components/Stats';
 import Table from 'components/Table';
-import { useSelectCountries } from 'hooks';
+import { useSelectCountries, useTableData } from 'hooks';
 import { fetcher } from 'lib/fetcher';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { StyledMap } from 'styles';
@@ -38,6 +38,7 @@ export default function Home({ countryName, countries, historical, countryData }
         value === 'worldwide' ? router.push('/') : router.push(`/${value}`);
     };
     const mapedCountries = useSelectCountries({ allCountries: countries });
+    const tableData = useTableData({ countries });
     const [mapPosition, setMapPosition] = useState({ lat: 40.7143528, lng: -74.0059731 });
     const [mapZoom, setMapZoom] = useState(3);
     const [casesType, setCasesType] = useState<CasesTypes>('deaths');
@@ -62,7 +63,7 @@ export default function Home({ countryName, countries, historical, countryData }
                     <Map position={mapPosition} zoom={mapZoom} countries={countries} casesType={casesType} />
                 </StyledMap>
                 {/* Table */}
-                <Table countries={countries} />
+                <Table countries={tableData} />
                 {/* Graph */}
                 <LineChart data={historical} casesType={casesType} />
             </Grid>

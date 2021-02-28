@@ -45,8 +45,8 @@ export const useSelectCountries = ({ allCountries }) => {
         [allCountries],
     );
 };
-export const useTableData = ({ allCountries }) => {
+export const useTableData = ({ countries }) => {
     return useMemo(() => {
-        return SortCases(allCountries);
-    }, [allCountries]);
+        return SortCases(countries);
+    }, [countries]);
 };
