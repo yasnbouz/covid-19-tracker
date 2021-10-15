@@ -42,7 +42,7 @@ export default function Card({ title, type, cases, total, onClick }: CardProps) 
             onKeyPress={onKeyPress}
             sx={{
                 bg: 'background2',
-                p: 1,
+                p: '1em',
                 borderRadius: 3,
                 flex: '0 0 250px',
                 boxShadow: nextColorMode === 'dark' ? '0 20px 40px rgba(0,0,0,.1)' : '',
@@ -66,9 +66,9 @@ export default function Card({ title, type, cases, total, onClick }: CardProps) 
                 },
             }}
         >
-            <p sx={{ color: '#767676', fontVariationSettings: "'wght' 300" }}>{title}</p>
-            <h2 sx={{ color: type, fontVariationSettings: "'wght' 450" }}>{numeral(cases).format('+0,0')}</h2>
-            <p sx={{ fontVariationSettings: "'wght' 550" }}>{numeral(total).format('0.0a')} Total</p>
+            <p sx={{ color: '#767676', fontVariationSettings: "'wght' 300", m: '0', mb: '1em' }}>{title}</p>
+            <h2 sx={{ color: type, fontVariationSettings: "'wght' 450", m: '0', mb: '1em' }}>{numeral(cases).format('+0,0')}</h2>
+            <p sx={{ fontVariationSettings: "'wght' 550", m: '0' }}>{numeral(total).format('0.0a')} Total</p>
         </div>
     );
 }
